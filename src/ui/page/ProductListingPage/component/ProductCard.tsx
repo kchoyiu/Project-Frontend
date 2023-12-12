@@ -1,9 +1,10 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCartShopping} from "@fortawesome/free-solid-svg-icons/faCartShopping";
 import {Col} from "react-bootstrap";
 import {ProductListDto} from "../../../../data/dto/ProductDto.ts";
+import {faEye} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 
 type Prop ={
     product:ProductListDto;
@@ -28,9 +29,9 @@ export default function ProductCard({product}:Prop){
                         <Card.Text>
                             ${product.price}
                         </Card.Text>
-                        <Button variant="dark" style={{color:"#ADFF2F"}}><FontAwesomeIcon icon={faCartShopping} beat size="2xs" style={{
+                       <Link to={`/product/${product.pid}`}><Button variant="dark" style={{color:"#ADFF2F"}}><FontAwesomeIcon icon={faEye} beat style={{
 
-                        }}/>Buy</Button>
+                        }}/>Detail</Button></Link>
                     </Card.Body>
                 </Card>
             </div>

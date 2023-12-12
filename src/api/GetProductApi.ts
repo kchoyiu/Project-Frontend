@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ProductListDto} from "../data/dto/ProductDto.ts";
+import {ProductDetailDto, ProductListDto} from "../data/dto/ProductDto.ts";
 
 export async function getAllProduct(): Promise<ProductListDto[]> {
     try {
@@ -8,6 +8,16 @@ export async function getAllProduct(): Promise<ProductListDto[]> {
         return response.data
     } catch (error) {
         console.error(error);
+        throw error;
+    }
+}
+
+export async function getProductDetail(pid:string): Promise<ProductDetailDto>{
+    try {
+        const response = await axios.get<ProductDetailDto>(`http://localhost:8080/public/product/${pid}`)
+        return response.data
+    }catch (error){
+        console.error(error)
         throw error;
     }
 }

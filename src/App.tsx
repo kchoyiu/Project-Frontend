@@ -2,6 +2,8 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import './App.css'
 import ProductListingPage from "./ui/page/ProductListingPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ErrorPage from "./ui/page/ErrorPage.tsx";
+import ProductDetailPage from "./ui/page/ProductDetailPage";
 
 
 function App() {
@@ -10,10 +12,10 @@ function App() {
       path: "/",
       element: <ProductListingPage/>
     },
-    // {
-    //   path: "/product/:productId/:userId",
-    //   element: <ProductDetail/>
-    // },
+    {
+      path: "/product/:productId/",
+      element: <ProductDetailPage/>
+    },
     // {
     //   path: "/shoppingcart",
     //   element: <ShoppingCart/>
@@ -30,6 +32,10 @@ function App() {
     //   path: "/thankyou",
     //   element: <ThankYou/>
     // }
+    {
+      path:"/error",
+      element: <ErrorPage/>
+    }
   ])
 
   return (

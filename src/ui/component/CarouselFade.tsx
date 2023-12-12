@@ -1,23 +1,25 @@
-import React from "react";
-import { Carousel } from "react-bootstrap";
+import {Carousel} from "react-bootstrap";
 
 
-export default function CarouselFade(){
-    return(
+export default function CarouselFade() {
+    return (
         <>
-            <Carousel style={{background:"gray"}}>
+            <Carousel style={{background: "gray", width: "60%", margin: "auto auto"}}>
                 <Carousel.Item>
-                    <img src={"https://reactrouter.com/_docs/tutorial/15.webp"}
-                         style={{width: "250px"}}
-                         className="d-block, mx-auto"/>
-                    <Carousel.Caption>
+                    <img
+                        src={"https://shoplineimg.com/62ce3bb1ca1bc7005cebff68/6497f02246ba3e0017aedfe2/1080x.webp?source_format=jpg"}
+                        style={{width: "100%"}}
+                        className="d-block, mx-auto"/>
+                    <Carousel.Caption style={{color:"black"}}>
                         <h3>First slide label</h3>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src={"https://www.w3schools.com/howto/img_paris.jpg"}
-                         style={{width: "100%"}}
+                    <img
+                        src={"https://shoplineimg.com/62ce3bb1ca1bc7005cebff68/6467315fc0abee002077565d/2160x.webp?source_format=jpg"}
+                        style={{width: "100%"}}
+                        className="d-block, mx-auto"
                     />
                     <Carousel.Caption>
                         <h3>Second slide label</h3>
@@ -25,13 +27,13 @@ export default function CarouselFade(){
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src={"https://www.w3schools.com/howto/img_paris.jpg"}
+                    <img src={"https://www.milk.com.hk/wp-content/uploads/2023/08/643631-1280x720.jpg"}
                          style={{width: "100%"}}
                     />
                     <Carousel.Caption>
                         <h3>Third slide label</h3>
                         <p>
-                        Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
                         </p>
                     </Carousel.Caption>
                 </Carousel.Item>

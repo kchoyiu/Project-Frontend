@@ -4,6 +4,7 @@ import ProductListingPage from "./ui/page/ProductListingPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ErrorPage from "./ui/page/ErrorPage.tsx";
 import ProductDetailPage from "./ui/page/ProductDetailPage";
+import LoginPage from "./ui/page/LoginPage";
 
 
 function App() {
@@ -20,10 +21,10 @@ function App() {
     //   path: "/shoppingcart",
     //   element: <ShoppingCart/>
     // },
-    // {
-    //   path: "/login",
-    //   element: <LoginPage/>
-    // },
+    {
+      path: "/login",
+      element: <LoginPage/>
+    },
     // {
     //   path: "/checkout/:transactionId",
     //   element: <Checkout/>

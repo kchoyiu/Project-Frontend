@@ -11,14 +11,16 @@ export default function QuantitySelector({quantity, handleMinus, handlePlus}: Pr
 
     return (
         <div className="d-flex">
-            <Button style={{
+            <Button
+                style={{
                 width: "40px",
                 height: "40px",
                 background: "black"}}
                     onClick={handleMinus}>
                 <FontAwesomeIcon icon={faSquareMinus}/>
             </Button>
-            <div style={{
+            <div
+                style={{
                 width: "40px",
                 height: "40px",
                 border: "1px black solid",
@@ -27,7 +29,8 @@ export default function QuantitySelector({quantity, handleMinus, handlePlus}: Pr
             }} className="d-flex justify-content-center align-items-center">
                 {quantity}
             </div>
-            <Button style={{
+            <Button
+                style={{
                 width: "40px",
                 height: "40px",
                 background: "black"}}

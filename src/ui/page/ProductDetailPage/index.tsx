@@ -27,7 +27,7 @@ export default function ProductDetailPage() {
     }
 
     const handlePlus = () => {
-        if (productDetail && quantity > productDetail?.stock) {
+        if (productDetail && quantity < productDetail?.stock) {
             setQuantity((quantity) => quantity + 1);
         }
     }
@@ -53,19 +53,20 @@ export default function ProductDetailPage() {
         <>
             <TopNavBar/>
             {
-                productDetail ?
-                    <Container style={{width:"42%"}}>
+                productDetail ?(
+                    <Container style={{width:"100%",paddingBottom:"12px",paddingLeft:"4px", paddingRight:"4px"}}>
                         <Card style={{
                             width: '100%',
                             margin:"auto auto",
-                            background: "gray"
+                            background: "white"
                         }}>
-                            <img src={productDetail.imageUrl}/>
-                            <Card.Body>
+                            <div className={"d-flex justify-content-between align-items-center"}>
+                            <img src={productDetail.imageUrl}
+                                 style={{width:"50%",margin:"auto auto", marginTop:"12px"}}/>
                                 <h2>{productDetail.name}</h2>
                                 <h3>{productDetail.description}
-                                    <br/>
                                     ${[productDetail.price]}</h3>
+                            </div>
                                 <div className="d-flex justify-content-center">
                                     <QuantitySelector quantity={quantity} handleMinus={handleMinus}
                                                       handlePlus={handlePlus}/>
@@ -76,10 +77,9 @@ export default function ProductDetailPage() {
                                         style={{}}/>Add to
                                         Cart</Button>
                                 </div>
-                            </Card.Body>
                         </Card>
-                    </Container> :
-                    <Loading/>
+                    </Container>) :
+                    (<Loading/>)
 
             }
 

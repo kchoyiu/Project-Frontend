@@ -22,19 +22,22 @@ export default function TopNavBar() {
                             style={{maxHeight: '100px',}}
                             navbarScroll
                         >
-                            <Nav.Link href="#action1" style={{color: "white"}}>Login</Nav.Link>
+                            <Form className="d-flex">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="success"><FontAwesomeIcon icon={faMagnifyingGlass} bounce
+                                                                           size="2xs"/></Button>
+                            </Form>
+                            <Nav.Link onClick={() =>{
+                                nevigate("/Login")
+                            }} style={{color: "white", cursor:"pointer"}}>Login</Nav.Link>
                             <Nav.Link href="#action2" style={{color: "white"}}>Shopping Cart</Nav.Link>
                         </Nav>
-                        <Form className="d-flex">
-                            <Form.Control
-                                type="search"
-                                placeholder="Search"
-                                className="me-2"
-                                aria-label="Search"
-                            />
-                            <Button variant="success"><FontAwesomeIcon icon={faMagnifyingGlass} bounce
-                                                                       size="2xs"/></Button>
-                        </Form>
+
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

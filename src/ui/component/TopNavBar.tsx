@@ -1,20 +1,52 @@
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Button, Container, Form, Nav,Navbar} from "react-bootstrap";
+import {Button, Container, Form, Nav, Navbar} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {LoginUserContext} from "../../App.tsx";
+import {faCartShopping} from "@fortawesome/free-solid-svg-icons/faCartShopping";
+import * as FirebaseAuthService from "../../authService/FirebaseAuthService.ts"
 
 export default function TopNavBar() {
 
-    const nevigate = useNavigate()
+    const loginUser = useContext(LoginUserContext)
+    const navigate = useNavigate()
+
+    const renderLoginContainer = () => {
+        if (loginUser) {
+            return(
+            <div style={{marginLeft:"600px"}} className="d-flex align-items-center">
+                {<div style={{color:"white", marginRight:"12px"}}>{loginUser.email}</div>}
+                <Button variant={"success"}><FontAwesomeIcon icon={faCartShopping} bounce style={{color: "#51501f",}}/></Button>
+                <Button variant={"danger"}
+                onClick={() =>{
+                    FirebaseAuthService.handleSignOut();
+                }}
+                style={{marginLeft:"8px"}}>Logout</Button>
+            </div>)
+        } else if (loginUser === null) {
+            return(
+                <Button onClick={() => {
+                    navigate("/Login")
+                }} style={{color: "white", cursor: "pointer", marginLeft: "720px"}}>Login</Button>
+            )
+        }else {
+            return (
+                <div className="spinner-grow text-light" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            )
+        }
+    }
 
     return (
         <>
-            <Navbar sticky="top" expand="lg" className="bg-body-tertiary">
+            <Navbar sticky="top" expand="lg" className="bg-body-tertiary pt-0 pb-0">
                 <Container fluid style={{background: "rgb(29,29,29)"}}>
-                   <Navbar.Brand onClick={() =>{
-                       nevigate("/")
-                   }} style={{background: "greenyellow", borderRadius: "12px", fontSize: "24px", cursor:"pointer"}}
-                                               className="mt-2 mb-2 ps-2 pe-2">Jersey Shop</Navbar.Brand>
+                    <Navbar.Brand onClick={() => {
+                        navigate("/")
+                    }} style={{background: "greenyellow", borderRadius: "12px", fontSize: "24px", cursor: "pointer"}}
+                                  className="mt-2 mb-2 ps-2 pe-2">Jersey Shop</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll"/>
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
@@ -32,10 +64,7 @@ export default function TopNavBar() {
                                 <Button variant="success"><FontAwesomeIcon icon={faMagnifyingGlass} bounce
                                                                            size="2xs"/></Button>
                             </Form>
-                            <Nav.Link onClick={() =>{
-                                nevigate("/Login")
-                            }} style={{color: "white", cursor:"pointer"}}>Login</Nav.Link>
-                            <Nav.Link href="#action2" style={{color: "white"}}>Shopping Cart</Nav.Link>
+                            {renderLoginContainer()}
                         </Nav>
 
                     </Navbar.Collapse>

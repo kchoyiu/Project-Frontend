@@ -53,36 +53,37 @@ export default function ProductDetailPage() {
         <>
             <TopNavBar/>
             {
-                productDetail ?(
-                    <Container style={{width:"100%",paddingBottom:"12px",paddingLeft:"4px", paddingRight:"4px"}}>
-                        <Card style={{
-                            width: '100%',
-                            margin:"auto auto",
-                            background: "white"
-                        }}>
-                            <div className={"d-flex justify-content-between align-items-center"}>
-                            <img src={productDetail.imageUrl}
-                                 style={{width:"50%",margin:"auto auto", marginTop:"12px"}}/>
-                                <h2>{productDetail.name}</h2>
-                                <h3>{productDetail.description}
-                                    ${[productDetail.price]}</h3>
-                            </div>
-                                <div className="d-flex justify-content-center">
-                                    <QuantitySelector quantity={quantity} handleMinus={handleMinus}
-                                                      handlePlus={handlePlus}/>
-                                    <Button variant="dark"
-                                            style={{color: "#ADFF2F", marginLeft: "8px"}}><FontAwesomeIcon
-                                        icon={faCartShopping} beat
-                                        size="2xs"
-                                        style={{}}/>Add to
-                                        Cart</Button>
+                productDetail ? (
+                        <Container style={{width: "90%", paddingBottom: "12px", paddingLeft: "4px", paddingRight: "4px"}}>
+                            <Card style={{
+                                width: '100%',
+                                margin: "auto auto",
+                                background: "white"
+                            }}>
+                                <div className={"d-flex justify-content-between align-items-center"}>
+                                    <img src={productDetail.imageUrl}
+                                         style={{width: "50%", margin: "auto auto", marginTop: "12px"}}/>
+                                    <div>
+                                        <h2>{productDetail.name}</h2>
+                                        <div style={{textAlign:"-webkit-match-parent"}}>
+                                            <h5>{productDetail.description}</h5>
+                                        </div>
+                                        <div><h1>${[productDetail.price]}</h1></div>
+                                        <hr/>
+                                        <QuantitySelector quantity={quantity} handleMinus={handleMinus}
+                                                          handlePlus={handlePlus}/>
+                                        <Button variant="dark"
+                                                style={{color: "#ADFF2F", marginTop: "8px"}}><FontAwesomeIcon
+                                            icon={faCartShopping} beat
+                                            size="2xs"
+                                            style={{}}/>Add to
+                                            Cart</Button>
+                                    </div>
                                 </div>
-                        </Card>
-                    </Container>) :
+                            </Card>
+                        </Container>) :
                     (<Loading/>)
-
             }
-
         </>
     )
 }

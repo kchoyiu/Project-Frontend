@@ -7,6 +7,8 @@ import {ProductListDto} from "../../../data/dto/ProductDto.ts"
 import Loading from "../../component/Loading.tsx";
 import * as GetProductApi from "../../../api/GetProductApi.ts"
 import { useNavigate } from "react-router-dom";
+import './ProductListingPage.css'
+
 
 export default function ProductListingPage(){
 
@@ -26,7 +28,7 @@ export default function ProductListingPage(){
     }, []);
 
     return (
-        <>
+        <div style={{}}>
             <TopNavBar/>
             <CarouselFade/>
             <Container>
@@ -35,6 +37,6 @@ export default function ProductListingPage(){
                         :<Loading/>
                 }
             </Container>
-        </>
+        </div>
     )
 }

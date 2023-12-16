@@ -8,7 +8,7 @@ import LoginPage from "./ui/page/LoginPage";
 import {createContext, useEffect, useState} from "react";
 import {UserData} from "./data/dto/UserDto.ts";
 import * as FirebaseAuthService from "./authService/FirebaseAuthService.ts"
-import ShoppingCart from "./ui/page/ShoppingCartPage";
+import ShoppingCart from "./ui/page/ShoppingCartPage/index.tsx";
 
 export const LoginUserContext = createContext<UserData | undefined | null>(undefined)
 

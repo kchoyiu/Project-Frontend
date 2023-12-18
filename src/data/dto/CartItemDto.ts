@@ -2,7 +2,7 @@ export interface CartItemDto {
     pid: number;
     price: number;
     stock: number;
-    Product_Name:string;
+    name:string;
     image_url: string;
     cart_quantity: number;
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {
     Button,
     Card,
@@ -6,33 +6,92 @@ import {
     Container,
     FormControl,
     InputGroup,
-    Row,
+    Row, Spinner,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faLongArrowAltLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import mockData from "./response.json";
 import {CartItemDto} from "../../../data/dto/CartItemDto.ts";
-
 import Loading from "../../component/Loading.tsx";
 import ShoppingCartContainer from "./component/ShoppingCartContainer.tsx";
-import CartItem from "./component/CartItem.tsx";
-
-
-
+import {useNavigate} from "react-router-dom";
+import TopNavBar from "../../component/TopNavBar.tsx";
+import * as CartItemApi from "../../../api/ShoppingCartApi.ts";
+import {LoginUserContext} from "../../../App.tsx";
+import EmptyCart from "./component/EmptyCart.tsx";
 
 
 export default function ShoppingCartPage() {
 
     const [cartItemList, setCarItemList] = useState<CartItemDto[] | undefined>(undefined)
 
+    const navigate = useNavigate()
+
+
+    const loginUser = useContext(LoginUserContext)
+
+   const getCartItemList = async () =>{
+        try {
+            const data = await CartItemApi.getCartItem();
+            setCarItemList(data);
+        }catch (error){
+            navigate("/Error")
+        }
+   }
+
+    const calTotalPrice = (cartDataList: CartItemDto[]): string => {
+        let total = 0;
+        for (const cartData of cartDataList) {
+            total += cartData.price * cartData.cart_quantity;
+        }
+        return total.toFixed(2);
+    }
+
+    const renderCartItemContainer = (cartItemList: CartItemDto[]) => {
+        if(cartItemList.length>0){
+            return(
+            <>
+                <ShoppingCartContainer cartItemList={cartItemList} setCartItemList={setCarItemList}/>
+            </>
+        )
+            }else {
+            return (
+                <EmptyCart/>
+            )
+        }
+    }
+
+    const renderCheckOutButton = (cartItemList: CartItemDto[]) => {
+        if (cartItemList.length>0){
+            return(
+                <Button variant="dark" block-size="lg">
+                    Check Out
+                </Button>
+            )
+        }else {
+            return (
+                <Button disabled variant="dark" block-size="lg">
+                    購物車沒有貨品
+                </Button>
+            )
+        }
+    }
+
+
     useEffect(() => {
-        setCarItemList(mockData)
-    }, []);
+        if(loginUser) {
+            getCartItemList()
+
+        }else if (loginUser===null){
+            navigate('/login')
+        }
+    }, [loginUser]);
 
 
     return (
+        <>
+            <TopNavBar/>
         <section className="h-100 h-custom" >
             <Container className="py-5 h-100">
                 <Row className="justify-content-center align-items-center h-100">
@@ -49,18 +108,15 @@ export default function ShoppingCartPage() {
 
                                             <hr className="my-4" />
                                             {
-                                                cartItemList
-                                                    ?<ShoppingCartContainer cartItemList={cartItemList}/>
-                                                    :<Loading/>
+                                                cartItemList?
+                                                    renderCartItemContainer(cartItemList)
+                                                    : <Loading/>
                                             }
-
                                             <hr className="my-4" />
-
-                                            {/* Repeat similar structure for other items */}
-
                                             <div className="pt-5">
                                                 <h6 className="mb-0">
-                                                    <a className="text-body">
+                                                    <a className="text-body"  onClick={() => {
+                                                        navigate("/")}} style={{cursor:"pointer"}}>
                                                         <FontAwesomeIcon icon={faLongArrowAltLeft} className="me-2" /> Back to shop
                                                     </a>
                                                 </h6>
@@ -74,20 +130,18 @@ export default function ShoppingCartPage() {
                                             <hr className="my-4" />
 
                                             <div className="d-flex justify-content-between mb-4">
-                                                <h5 className="text-uppercase">items {`${cartItemList?.length}`}</h5>
-                                                <h5>Total:$</h5>
+                                                <h5 className="text-uppercase">items: {`${cartItemList?.length}`}</h5>
                                             </div>
 
-                                            <h5 className="text-uppercase mb-3">Shipping</h5>
+                                            <h5 className="mb-3">Shipping</h5>
 
                                             <div className="mb-4 pb-2">
                                                 <select className="select p-2 rounded bg-grey" style={{ width: "100%" }}>
-                                                    <option value="1">Standard-Delivery- €5.00</option>
-                                                    {/* Add other shipping options as needed */}
+                                                    <option value="1">Standard-Delivery</option>
                                                 </select>
                                             </div>
 
-                                            <h5 className="text-uppercase mb-3">Give code</h5>
+                                            <h5>Give code</h5>
 
                                             <div className="mb-5">
                                                 <InputGroup size="lg">
@@ -98,13 +152,18 @@ export default function ShoppingCartPage() {
                                             <hr className="my-4" />
 
                                             <div className="d-flex justify-content-between mb-5">
-                                                <h5 className="text-uppercase">Total price</h5>
-                                                <h5>€ 137.00</h5>
+                                                {
+                                                    cartItemList ?
+                                                        <h3>Total:${calTotalPrice(cartItemList)}</h3>
+                                                        : <Spinner animation="border" role="status">
+                                                            <span className="visually-hidden">Loading...</span>
+                                                        </Spinner>
+                                                }
                                             </div>
-
-                                            <Button variant="dark" block-size="lg">
-                                                Check Out
-                                            </Button>
+                                            {
+                                                cartItemList&&
+                                                    renderCheckOutButton(cartItemList)
+                                            }
                                         </div>
                                     </Col>
                                 </Row>
@@ -114,5 +173,6 @@ export default function ShoppingCartPage() {
                 </Row>
             </Container>
         </section>
+        </>
     );
 }

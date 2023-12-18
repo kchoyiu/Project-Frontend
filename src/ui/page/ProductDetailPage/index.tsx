@@ -7,12 +7,19 @@ import QuantitySelector from "../../component/QuantitySelector.tsx";
 import {useEffect, useState} from "react";
 import {ProductDetailDto} from "../../../data/dto/ProductDto.ts";
 import Loading from "../../component/Loading.tsx";
-import * as ProductApi from "../../../api/GetProductApi.ts"
+import * as ProductApi from "../../../api/ProductApi.ts"
+import {CartItemDto} from "../../../data/dto/CartItemDto.ts";
+
+
+type Props = {
+    cartItemList: CartItemDto[];
+    addToCart: (productId: string, quantity: number) => void;
+}
 
 type Params = {
     productId: string
 }
-export default function ProductDetailPage() {
+export default function ProductDetailPage({cartItemList, addToCart}: Props) {
 
     const {productId} = useParams<Params>()
 
@@ -31,6 +38,13 @@ export default function ProductDetailPage() {
             setQuantity((quantity) => quantity + 1);
         }
     }
+
+    const handleAddToCart = () => {
+        // Ensure productDetail is defined before adding to cart
+        if (productDetail && productId) {
+            addToCart(productId, quantity);
+        }
+    };
 
     const getProductDetail = async (productId: string) => {
         try {
@@ -58,14 +72,20 @@ export default function ProductDetailPage() {
                             <Card style={{
                                 width: '100%',
                                 margin: "auto auto",
-                                background: "white"
+                                background: "white",
+                                marginTop: "12px"
                             }}>
                                 <div className={"d-flex justify-content-between align-items-center"}>
                                     <img src={productDetail.imageUrl}
-                                         style={{width: "50%", margin: "auto auto", marginTop: "12px"}}/>
+                                         style={{
+                                             width: "50%",
+                                             margin: "auto auto",
+                                             marginTop: "12px",
+                                             padding: "8px 8px 8px 8px"
+                                         }}/>
                                     <div>
                                         <h2>{productDetail.name}</h2>
-                                        <div style={{textAlign:"-webkit-match-parent"}}>
+                                        <div style={{textAlign: "-webkit-match-parent"}}>
                                             <h5>{productDetail.description}</h5>
                                         </div>
                                         <div><h1>${[productDetail.price]}</h1></div>
@@ -73,7 +93,8 @@ export default function ProductDetailPage() {
                                         <QuantitySelector quantity={quantity} handleMinus={handleMinus}
                                                           handlePlus={handlePlus}/>
                                         <Button variant="dark"
-                                                style={{color: "#ADFF2F", marginTop: "8px"}}><FontAwesomeIcon
+                                                style={{color: "#ADFF2F", marginTop: "8px"}}
+                                                onClick={handleAddToCart}><FontAwesomeIcon
                                             icon={faCartShopping} beat
                                             size="2xs"
                                             style={{}}/>Add to

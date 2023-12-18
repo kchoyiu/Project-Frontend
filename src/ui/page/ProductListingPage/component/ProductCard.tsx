@@ -27,7 +27,7 @@ export default function ProductCard({product}:Prop){
                     <Card.Body>
                         <Card.Title style={{height:"64px"}}>{product.name}</Card.Title>
                         <Card.Text>
-                            ${product.price}
+                            ${product.price.toFixed(2)}
                         </Card.Text>
                        <Link to={`/product/${product.pid}`}><Button variant="dark" style={{color:"#ADFF2F"}}><FontAwesomeIcon icon={faEye} beat style={{
 

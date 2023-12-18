@@ -5,7 +5,7 @@ import CarouselFade from "../../component/CarouselFade.tsx";
 import {useEffect, useState} from "react";
 import {ProductListDto} from "../../../data/dto/ProductDto.ts"
 import Loading from "../../component/Loading.tsx";
-import * as GetProductApi from "../../../api/GetProductApi.ts"
+import * as GetProductApi from "../../../api/ProductApi.ts"
 import { useNavigate } from "react-router-dom";
 import './ProductListingPage.css'
 

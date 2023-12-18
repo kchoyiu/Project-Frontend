@@ -4,7 +4,7 @@ export default function Loading(){
             width:"100vw",
             height:"90wh"
         }}>
-            <img src="https://cdn.pixabay.com/animation/2023/04/16/16/42/16-42-44-845_512.gif"/>
+            <img src="https://cdn.pixabay.com/animation/2023/04/05/15/03/15-03-40-192_512.gif"/>
         </div>
     )
 }

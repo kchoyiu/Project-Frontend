@@ -12,6 +12,8 @@ import {LoginUserContext} from "../../../App.tsx";
 export default function LoginPage() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [isLoginFailed,setIsLoginFailed] = useState<boolean>(false)
+
     const loginUser = useContext(LoginUserContext)
     const navigate = useNavigate()
 
@@ -27,6 +29,8 @@ export default function LoginPage() {
         const loginResult = await FirebaseAuthService.handleSignInWithEmailAndPassword(email,password);
         if (loginResult){
             navigate(-1)
+        }else {
+            setIsLoginFailed(true);
         }
     }
 
@@ -75,21 +79,24 @@ export default function LoginPage() {
                                                     onChange={handlePasswordChange}
                                                     value={password}/>
                                             </Form.Group>
+                                            {
+                                                isLoginFailed &&
+                                            <div style={{color:"red"}}>
+                                                Incorrect Email & Password
+                                            </div>
+                                            }
                                             <Button variant="primary" type="submit">
                                                 Login
                                             </Button>
                                             <hr/>
                                             <GoogleLoginButton onClick={() =>{
                                                 FirebaseAuthService.handleSignInWithGoogle()
-                                            }} />
+                                            }}/>
                                         </Form>
                                     </Container>
-
                                 </div>
-
                             </CardBody>
                         </Col>
-
                     </Row>
                 </Card>
 

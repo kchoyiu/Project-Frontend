@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {
     Button,
     Card,
@@ -12,27 +12,56 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faLongArrowAltLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import mockData from "./response.json";
 import {CartItemDto} from "../../../data/dto/CartItemDto.ts";
-
 import Loading from "../../component/Loading.tsx";
 import ShoppingCartContainer from "./component/ShoppingCartContainer.tsx";
-import CartItem from "./component/CartItem.tsx";
-
-
-
+import {useNavigate} from "react-router-dom";
+import TopNavBar from "../../component/TopNavBar.tsx";
+import * as CartItemApi from "../../../api/ShoppingCartApi.ts";
+import {LoginUserContext} from "../../../App.tsx";
 
 
 export default function ShoppingCartPage() {
 
     const [cartItemList, setCarItemList] = useState<CartItemDto[] | undefined>(undefined)
+    const [totalPrice, setTotalPrice] = useState<number>(0);
+    const navigate = useNavigate()
+
+    const loginUser = useContext(LoginUserContext)
+
+   const getCartItemList = async () =>{
+        try {
+            const data = await CartItemApi.getCartItem();
+            setCarItemList(data);
+        }catch (error){
+            navigate("/Error")
+        }
+   }
 
     useEffect(() => {
-        setCarItemList(mockData)
-    }, []);
+        if(loginUser) {
+            getCartItemList()
+        }else if (loginUser===null){
+            navigate('/login')
+        }
+        if (cartItemList) {
+            const calculatedTotal = cartItemList.reduce((total, item) => total + item.price * item.cart_quantity, 0);
+            setTotalPrice(calculatedTotal);
+        }
+    }, [loginUser,cartItemList]);
+
+    // const addToCart = (productId: string, quantity: number) => {
+    //     // Your logic to add the item to the cart
+    //     // You can update the cartItemList state or send a request to the server
+    //     console.log(`Added ${quantity} item(s) of product ${productId} to the cart`);
+    // };
+
+
 
 
     return (
+        <>
+            <TopNavBar/>
         <section className="h-100 h-custom" >
             <Container className="py-5 h-100">
                 <Row className="justify-content-center align-items-center h-100">
@@ -50,7 +79,7 @@ export default function ShoppingCartPage() {
                                             <hr className="my-4" />
                                             {
                                                 cartItemList
-                                                    ?<ShoppingCartContainer cartItemList={cartItemList}/>
+                                                    ? <ShoppingCartContainer cartItemList={cartItemList}/>
                                                     :<Loading/>
                                             }
 
@@ -60,7 +89,8 @@ export default function ShoppingCartPage() {
 
                                             <div className="pt-5">
                                                 <h6 className="mb-0">
-                                                    <a className="text-body">
+                                                    <a className="text-body"  onClick={() => {
+                                                        navigate("/")}} style={{cursor:"pointer"}}>
                                                         <FontAwesomeIcon icon={faLongArrowAltLeft} className="me-2" /> Back to shop
                                                     </a>
                                                 </h6>
@@ -75,19 +105,19 @@ export default function ShoppingCartPage() {
 
                                             <div className="d-flex justify-content-between mb-4">
                                                 <h5 className="text-uppercase">items {`${cartItemList?.length}`}</h5>
-                                                <h5>Total:$</h5>
+                                                <h5>Total:${totalPrice.toFixed(2)}</h5>
                                             </div>
 
-                                            <h5 className="text-uppercase mb-3">Shipping</h5>
+                                            <h5 className="mb-3">Shipping</h5>
 
                                             <div className="mb-4 pb-2">
                                                 <select className="select p-2 rounded bg-grey" style={{ width: "100%" }}>
-                                                    <option value="1">Standard-Delivery- €5.00</option>
+                                                    <option value="1">Standard-Delivery</option>
                                                     {/* Add other shipping options as needed */}
                                                 </select>
                                             </div>
 
-                                            <h5 className="text-uppercase mb-3">Give code</h5>
+                                            <h5>Give code</h5>
 
                                             <div className="mb-5">
                                                 <InputGroup size="lg">
@@ -99,7 +129,7 @@ export default function ShoppingCartPage() {
 
                                             <div className="d-flex justify-content-between mb-5">
                                                 <h5 className="text-uppercase">Total price</h5>
-                                                <h5>€ 137.00</h5>
+                                                <h5>$ {totalPrice.toFixed(2)}</h5>
                                             </div>
 
                                             <Button variant="dark" block-size="lg">
@@ -114,5 +144,6 @@ export default function ShoppingCartPage() {
                 </Row>
             </Container>
         </section>
+        </>
     );
 }

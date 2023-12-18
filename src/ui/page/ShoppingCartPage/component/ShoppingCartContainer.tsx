@@ -10,7 +10,7 @@ export default function ShoppingCartContainer({cartItemList}:Props){
         <div>
             {
                 cartItemList.map((item)=>(
-                    <CartItem cartItem={item}/>
+                    <CartItem cartItem={item} key={item.pid}/>
                 ))
             }
         </div>

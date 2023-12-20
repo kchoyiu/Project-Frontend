@@ -10,9 +10,10 @@ type Prop = {
     item: CartItemDto,
     carItemList: CartItemDto[],
     setCartItemList: (cartItemList: CartItemDto[]) => void
+    calTotalPrice: (cartDataList:CartItemDto[]) => void
 }
 
-export default function CartItem({item, setCartItemList, carItemList}: Prop) {
+export default function CartItem({item, setCartItemList, carItemList,calTotalPrice}: Prop) {
     const [quantity, setQuantity] = useState<number>(item.cart_quantity)
     const [isPatchingQuantity, setIsPatchingQuantity] = useState<boolean>(false)
     const [isDeleting, setIsDeleting] = useState<boolean>(false)
@@ -24,6 +25,12 @@ export default function CartItem({item, setCartItemList, carItemList}: Prop) {
             const data = await CartItemApi.patchCartItem(item.pid, quantity - 1);
             setQuantity(data.cart_quantity)
             setIsPatchingQuantity(false)
+            for(const cartItem of carItemList){
+                if (cartItem.pid===item.pid){
+                    cartItem.cart_quantity = data.cart_quantity;
+                    calTotalPrice(carItemList)
+                }
+            }
         }
     }
 
@@ -33,6 +40,12 @@ export default function CartItem({item, setCartItemList, carItemList}: Prop) {
         const data = await CartItemApi.patchCartItem(item.pid, quantity + 1);
         setQuantity(data.cart_quantity)
         setIsPatchingQuantity(false)
+        for(const cartItem of carItemList){
+            if (cartItem.pid===item.pid){
+                cartItem.cart_quantity = data.cart_quantity;
+                calTotalPrice(carItemList)
+            }
+        }
     }
 
     const handleDelete = async () => {
@@ -41,7 +54,8 @@ export default function CartItem({item, setCartItemList, carItemList}: Prop) {
         const updatedList = carItemList.filter((cartItem) => (
             cartItem.pid !== item.pid
         ));
-        setCartItemList(updatedList);
+        setCartItemList(updatedList)
+        calTotalPrice(updatedList)
         setIsDeleting(false)
     }
 

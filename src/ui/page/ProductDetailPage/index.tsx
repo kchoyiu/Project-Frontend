@@ -143,7 +143,7 @@ export default function ProductDetailPage() {
                                              width: "50%",
                                              margin: "auto auto",
                                              marginTop: "12px",
-                                             padding: "8px 8px 8px 8px"
+                                             padding: "8px 8px 8px 8px",
                                          }}/>
                                     <div style={{marginRight:"8px"}}>
                                         <h2>{productDetail.name}</h2>

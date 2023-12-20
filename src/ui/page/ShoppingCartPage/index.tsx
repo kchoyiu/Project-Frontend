@@ -52,7 +52,9 @@ export default function ShoppingCartPage() {
         if(cartItemList.length>0){
             return(
             <>
-                <ShoppingCartContainer cartItemList={cartItemList} setCartItemList={setCarItemList}/>
+                <ShoppingCartContainer cartItemList={cartItemList}
+                                       setCartItemList={setCarItemList}
+                                       calTotalPrice={calTotalPrice}/>
             </>
         )
             }else {

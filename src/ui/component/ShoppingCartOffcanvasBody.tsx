@@ -1,4 +1,3 @@
-import {Offcanvas} from "react-bootstrap";
 import {CartItemDto} from "../../data/dto/CartItemDto.ts";
 
 type Props={
@@ -7,8 +6,7 @@ type Props={
 
 export default function ShoppingCartOffcanvasBody({cartItemDto}:Props) {
     return (
-        <Offcanvas.Body>
-            <div>
+            <>
                 <div
                     style=
                     {{width:"100%",
@@ -23,7 +21,6 @@ export default function ShoppingCartOffcanvasBody({cartItemDto}:Props) {
                 Price: ${cartItemDto.price * cartItemDto.cart_quantity}<br/>
                 Quantity:{cartItemDto.cart_quantity}
                 </div>
-            </div>
-        </Offcanvas.Body>
+            </>
     )
 }

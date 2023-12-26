@@ -9,6 +9,8 @@ import {createContext, useEffect, useState} from "react";
 import {UserData} from "./data/dto/UserDto.ts";
 import * as FirebaseAuthService from "./authService/FirebaseAuthService.ts"
 import ShoppingCart from "./ui/page/ShoppingCartPage/index.tsx";
+import CheckOutPage from "./ui/page/CheckOutPage";
+import ThankYouPage from "./ui/page/ThankyouPage";
 
 export const LoginUserContext = createContext<UserData | undefined | null>(undefined)
 
@@ -37,14 +39,14 @@ function App() {
             path: "/login",
             element: <LoginPage/>
         },
-        // {
-        //   path: "/checkout/:transactionId",
-        //   element: <Checkout/>
-        // },
-        // {
-        //   path: "/thankyou",
-        //   element: <ThankYou/>
-        // }
+        {
+          path: "/checkout/:transactionId",
+          element: <CheckOutPage/>
+        },
+        {
+          path: "/thankyou",
+          element: <ThankYouPage/>
+        },
         {
             path: "/error",
             element: <ErrorPage/>

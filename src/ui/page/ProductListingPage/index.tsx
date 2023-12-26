@@ -18,6 +18,7 @@ export default function ProductListingPage(){
        try {
            const data = await GetProductApi.getAllProduct()
            setProductList(data);
+           document.title="Jersey Shop - Home"
        }catch (error){
             navigate("/error")
        }

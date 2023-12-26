@@ -46,6 +46,7 @@ export default function ShoppingCartOffcanvas({show,handleClose}:Props){
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title style={{width:"100%"}}>
                     <h2>ShoppingCart</h2><br/>
+                    <Offcanvas.Body>
                     <div className="d-flex justify-content-between align-items-center" style={{width:"100%"}}>
                         <div>
                             Total:$ {
@@ -61,6 +62,7 @@ export default function ShoppingCartOffcanvas({show,handleClose}:Props){
                             <Button variant="dark" onClick={()=>{ navigate("/shoppingcart")}}><FontAwesomeIcon icon={faCartShopping} bounce style={{color: "#cedb1a"}}/></Button>
                         </div>
                     </div>
+                    </Offcanvas.Body>
                 </Offcanvas.Title>
             </Offcanvas.Header>
             {

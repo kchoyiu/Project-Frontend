@@ -55,6 +55,7 @@ export default function ProductDetailPage() {
         try {
             const response = await ProductApi.getProductDetail(productId)
             setProductDetail(response);
+            document.title =response.name
         } catch (e) {
             navigate("/error");
         }

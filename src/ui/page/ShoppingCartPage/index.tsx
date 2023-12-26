@@ -20,11 +20,13 @@ import TopNavBar from "../../component/TopNavBar.tsx";
 import * as CartItemApi from "../../../api/ShoppingCartApi.ts";
 import {LoginUserContext} from "../../../App.tsx";
 import EmptyCart from "./component/EmptyCart.tsx";
+import * as TransactionApi from "../../../api/TransactionApi.ts"
 
 
 export default function ShoppingCartPage() {
 
     const [cartItemList, setCarItemList] = useState<CartItemDto[] | undefined>(undefined)
+    const [notCheckOut,setNotCheckOut] = useState<boolean>(true)
 
     const navigate = useNavigate()
 
@@ -35,6 +37,7 @@ export default function ShoppingCartPage() {
         try {
             const data = await CartItemApi.getCartItem();
             setCarItemList(data);
+            document.title="Shopping Cart"
         }catch (error){
             navigate("/Error")
         }
@@ -64,10 +67,22 @@ export default function ShoppingCartPage() {
         }
     }
 
+    const handleCheckOut = async () => {
+        try{
+            setNotCheckOut(false)
+            const transactionData = await TransactionApi.prepareTransaction();
+            navigate(`/checkout/${transactionData.tid}`)
+        }catch (e){
+            navigate("/Error")
+        }
+    }
+
     const renderCheckOutButton = (cartItemList: CartItemDto[]) => {
         if (cartItemList.length>0){
             return(
-                <Button variant="dark" block-size="lg">
+                <Button variant="dark"
+                        block-size="lg"
+                onClick={handleCheckOut}>
                     Check Out
                 </Button>
             )
@@ -164,7 +179,9 @@ export default function ShoppingCartPage() {
                                             </div>
                                             {
                                                 cartItemList&&
-                                                    renderCheckOutButton(cartItemList)
+                                                notCheckOut?
+                                                    renderCheckOutButton(cartItemList):
+                                                    <Spinner/>
                                             }
                                         </div>
                                     </Col>

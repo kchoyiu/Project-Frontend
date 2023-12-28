@@ -1,16 +1,10 @@
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import {RouterProvider} from 'react-router-dom'
 import './App.css'
-import ProductListingPage from "./ui/page/ProductListingPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ErrorPage from "./ui/page/ErrorPage.tsx";
-import ProductDetailPage from "./ui/page/ProductDetailPage";
-import LoginPage from "./ui/page/LoginPage";
 import {createContext, useEffect, useState} from "react";
 import {UserData} from "./data/dto/UserDto.ts";
 import * as FirebaseAuthService from "./authService/FirebaseAuthService.ts"
-import ShoppingCart from "./ui/page/ShoppingCartPage/index.tsx";
-import CheckOutPage from "./ui/page/CheckOutPage";
-import ThankYouPage from "./ui/page/ThankyouPage";
+import {router} from "./config/ReactRouterConfig.tsx";
 
 export const LoginUserContext = createContext<UserData | undefined | null>(undefined)
 
@@ -22,36 +16,6 @@ function App() {
         FirebaseAuthService.handleOnAuthStateChanged(setLoginUser);
     }, []);
 
-    const router = createBrowserRouter([
-        {
-            path: "/",
-            element: <ProductListingPage/>
-        },
-        {
-            path: "/product/:productId/",
-            element: <ProductDetailPage/>
-        },
-        {
-          path: "/shoppingcart",
-          element: <ShoppingCart/>
-        },
-        {
-            path: "/login",
-            element: <LoginPage/>
-        },
-        {
-          path: "/checkout/:transactionId",
-          element: <CheckOutPage/>
-        },
-        {
-          path: "/thankyou",
-          element: <ThankYouPage/>
-        },
-        {
-            path: "/error",
-            element: <ErrorPage/>
-        }
-    ])
 
     return (
         <>

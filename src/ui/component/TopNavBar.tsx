@@ -1,6 +1,6 @@
-import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRightToBracket, faRightToBracket} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Button, Container, Form, Nav, Navbar} from "react-bootstrap";
+import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {LoginUserContext} from "../../App.tsx";
@@ -22,20 +22,20 @@ export default function TopNavBar() {
     const renderLoginContainer = () => {
         if (loginUser) {
             return(
-            <div style={{marginLeft:"600px"}} className="d-flex align-items-center">
+            <div style={{marginLeft:"900px"}} className="d-flex align-items-center">
                 {<div style={{color:"white", marginRight:"12px"}}>{loginUser.email}</div>}
                 <Button variant={"success"} onClick={() => {
                     handleShow()}}><FontAwesomeIcon icon={faCartShopping} bounce style={{color: "#cedb1a"}}/></Button>
                 <Button variant={"danger"}
                 onClick={() =>{
                     FirebaseAuthService.handleSignOut(), navigate('/')}}
-                style={{marginLeft:"8px"}}>Logout</Button>
+                style={{marginLeft:"8px"}}><FontAwesomeIcon icon={faArrowRightToBracket} style={{color: "#1354d8",}} /></Button>
             </div>)
         } else if (loginUser === null) {
             return(
                 <Button onClick={() => {
                     navigate("/Login")
-                }} style={{color: "white", cursor: "pointer", marginLeft: "720px"}}>Login</Button>
+                }} style={{color: "white", cursor: "pointer", marginLeft: "720px"}}><FontAwesomeIcon icon={faRightToBracket} style={{color: "#1f5131",}} /></Button>
             )
         }else {
             return (
@@ -62,16 +62,6 @@ export default function TopNavBar() {
                             style={{maxHeight: '100px',}}
                             navbarScroll
                         >
-                            <Form className="d-flex">
-                                <Form.Control
-                                    type="search"
-                                    placeholder="Search"
-                                    className="me-2"
-                                    aria-label="Search"
-                                />
-                                <Button variant="success"><FontAwesomeIcon icon={faMagnifyingGlass} bounce
-                                                                           size="2xs"/></Button>
-                            </Form>
                             {renderLoginContainer()}
                         </Nav>
 

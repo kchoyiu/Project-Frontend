@@ -1,8 +1,9 @@
 import {TransactionDto} from "../data/dto/TransactionDto.ts";
 import axios from "axios";
 import * as FirebaseAuthService from "../authService/FirebaseAuthService.ts"
+import getEnvConfig from "../config/EnvConfig.ts";
 
-const baseUrl="http://localhost:8080";
+const baseUrl=getEnvConfig().baseUrl;
 
 
 export async function prepareTransaction(): Promise<TransactionDto> {

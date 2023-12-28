@@ -5,8 +5,8 @@ import Card from "react-bootstrap/esm/Card";
 import {useContext, useEffect, useState} from "react";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
-import { GoogleLoginButton } from "react-social-login-buttons";
 import {LoginUserContext} from "../../../App.tsx";
+
 
 
 export default function LoginPage() {
@@ -39,6 +39,7 @@ export default function LoginPage() {
             navigate("/")
         }
     }, [loginUser]);
+
 
     return (
         <div>
@@ -89,9 +90,9 @@ export default function LoginPage() {
                                                 Login
                                             </Button>
                                             <hr/>
-                                            <GoogleLoginButton onClick={() =>{
-                                                FirebaseAuthService.handleSignInWithGoogle()
-                                            }}/>
+                                            {/*<GoogleLoginButton onClick={() => {*/}
+                                            {/*    FirebaseAuthService.handleSignInWithGoogle()*/}
+                                            {/*}}/>*/}
                                         </Form>
                                     </Container>
                                 </div>

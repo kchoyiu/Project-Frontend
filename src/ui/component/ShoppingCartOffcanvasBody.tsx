@@ -16,7 +16,7 @@ export default function ShoppingCartOffcanvasBody({cartItemDto}:Props) {
                         backgroundPosition:"center",
                         backgroundSize:"contain",
                     }}/>
-                <div style={{fontSize:"12px"}}>
+                <div style={{fontSize:"12px", marginLeft:"16px"}}>
                 {cartItemDto.name}<br/>
                 Price: ${cartItemDto.price * cartItemDto.cart_quantity}<br/>
                 Quantity:{cartItemDto.cart_quantity}

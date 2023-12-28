@@ -84,7 +84,7 @@ export default function CheckOutPage() {
                                                   style={{marginBottom: "16px", marginLeft: "40%", width: "20%"}}
                                                   onClick={handleCheckOut}>
                                             Payment
-                                            <FontAwesomeIcon icon={faMoneyBillWave} flip size="2xl"
+                                            <FontAwesomeIcon icon={faMoneyBillWave}  size="2xl"
                                                              style={{color: "#30b039", marginLeft: "8px"}}/>
                                         </Button>
                                 }
